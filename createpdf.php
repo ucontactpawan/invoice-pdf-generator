@@ -25,7 +25,7 @@ $invoice = [
         ['name' => 'Safari Backpack', 'sku' => '24-SB02', 'qty' => 1, 'subtotal' => 50.00],
         ['name' => 'Milton Water Bottle', 'sku' => '24-MW06', 'qty' => 1, 'subtotal' => 7.00],
         ['name' => 'Lapton Cover - Stylish', 'sku' => '24-LC05', 'qty' => 1, 'subtotal' => 16.00],
-        ['name' => 'Remote Control car', 'sku' => '24-RC05', 'qty' => 1, 'subtotal' => 19.00],
+        ['name' => 'Remote Contro car', 'sku' => '24-RC05', 'qty' => 1, 'subtotal' => 19.00],
     ],
     'subtotal' => 141.00,
     'discount' => 14.10,
@@ -44,14 +44,14 @@ $html = '
 <body>
 <div class="invoice-box">
     <div class="header">
-        <div>
-            <h1><span style="font-weight:bold;">Sales</span> Invoice</h1>
+        <div style="left;">
+            <img src="download.png" style="width: 100px; height: auto; margin-bottom: 20px;">
         </div>
     </div>
     <table class="summary-table">
         <tr>
-            <td><b>INVOICE NUMBER</b><br>' . $invoice['number'] . '</td>
-            <td><b>ORDER</b><br>' . $invoice['order'] . '</td>
+            <td><b>INVOICE NUMBER</b><br>#' . $invoice['number'] . '</td>
+            <td><b>ORDER</b><br>#' . $invoice['order'] . '</td>
             <td><b>ORDER DATE</b><br>' . $invoice['date'] . '</td>
         </tr>
     </table>
@@ -88,7 +88,7 @@ foreach ($invoice['items'] as $item) {
                 <span class="small">SKU: ' . $item['sku'] . '</span>
             </td>
             <td>' . $item['qty'] . '</td>
-            <td>&#8377;' . number_format($item['subtotal'], 2) . '</td>
+            <td>&#8377;'. number_format($item['subtotal'], 2) . '</td>
         </tr>';
 }
 $html .= '
