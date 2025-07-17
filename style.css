@@ -1,0 +1,103 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    color: #222;
+}
+.invoice-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+.invoice-title {
+    font-weight: bold;
+}
+.summary-table, .items-table, .totals-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.summary-table td {
+    padding: 4px 8px;
+}
+.items-table th, .items-table td {
+    border: 1px solid #eee;
+    padding: 8px;
+}
+.items-table th {
+    background: #ff7765; 
+    color: #fff;
+    padding: 8px;
+    text-align: left;
+}
+
+.items-table td {
+    padding: 8px;
+    border: 1px solid #eee;
+}
+
+.right {
+    text-align: right;
+}
+.bold {
+    font-weight: bold;
+}
+.red {
+    color: #f44336;
+}
+.small {
+    font-size: 12px;
+    color: #888;
+}
+hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+.container{
+    max-width: 500px;
+    margin: auto;
+    padding: 50px;
+}
+
+.total-summary {
+    width: 300px; /* Fixed width instead of percentage */
+    margin-left: auto; /* Push to the right */
+    margin-right: 0;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.total-summary td {
+    padding: 4px 8px;
+    vertical-align: middle;
+}
+
+.total-summary .label {
+    text-align: right; /* Change to right alignment */
+    font-size: 14px;
+    color: #333;
+}
+
+.total-summary .value {
+    text-align: right;
+    font-size: 14px;
+    color: #000;
+    width: 100px; /* Fixed width for values column */
+}
+
+.total-summary tr:last-child {
+    background: #ff7765; /* Match the header color */
+    color: #fff;
+}
+
+.total-summary .bold {
+    font-weight: bold;
+    font-size: 14px; /* Same size as other text */
+    color: inherit; /* Will be white for grand total due to background */
+}
