@@ -3,18 +3,38 @@ require_once __DIR__ . '/MPDF/vendor/autoload.php';
 
 
 
-$dataFile = 'data.json';
-$latestUser = [ 
-    'fullname' => 'N/A',
-    'email' => 'N/A',
-    'phone' => 'N/A',
-    'address' => 'N/A',
-];
+// Get user data either from form submission or from saved data
+if (isset($_POST['submit'])) {
+    $userData = [
+        'fullname' => $_POST['fullname'] ?? 'N/A',
+        'email' => $_POST['email'] ?? 'N/A',
+        'phone' => $_POST['phone'] ?? 'N/A',
+        'address' => $_POST['message'] ?? 'N/A'
+    ];
 
-if (file_exists($dataFile)) {
-    $allUsers = json_decode(file_get_contents($dataFile), true);
-    if (!empty($allUsers)) {
-        $latestUser = end($allUsers);
+    // Save to data.json
+    $dataFile = 'data.json';
+    if(file_exists($dataFile)) {
+        $allUsers = json_decode(file_get_contents($dataFile), true) ?? [];
+    } else {
+        $allUsers = [];
+    }
+    $allUsers[] = $userData;
+    file_put_contents($dataFile, json_encode($allUsers, JSON_PRETTY_PRINT));
+} else {
+    $dataFile = 'data.json';
+    $userData = [ 
+        'fullname' => 'N/A',
+        'email' => 'N/A',
+        'phone' => 'N/A',
+        'address' => 'N/A'
+    ];
+
+    if (file_exists($dataFile)) {
+        $allUsers = json_decode(file_get_contents($dataFile), true);
+        if (!empty($allUsers)) {
+            $userData = end($allUsers);
+        }
     }
 }
 
@@ -23,10 +43,10 @@ $invoice = [
     'order' => '9000000001',
     'date' => date('M d, Y, h:i:s A'),
     'customer' => [
-        'name' => htmlspecialchars($latestUser['fullname']),
-        'address' => htmlspecialchars($latestUser['address']),
-        'phone' => htmlspecialchars($latestUser['phone']),
-        'email' => htmlspecialchars($latestUser['email']),
+        'name' => htmlspecialchars($userData['fullname']),
+        'address' => htmlspecialchars($userData['address']),
+        'phone' => htmlspecialchars($userData['phone']),
+        'email' => htmlspecialchars($userData['email']),
     ],
     'shipping_method' => 'Flat Rate - Fixed',
     'payment_method' => 'COD/ UPI / Bank Transfer',

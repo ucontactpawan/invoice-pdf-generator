@@ -1,4 +1,9 @@
 <?php
+
+if(isset($_FILES['file']) && $_FILES['file']['error'] == UPLOAD_ERR_OK) {
+    require 'read_file.php'; 
+    exit; 
+}
 $fullname = $_POST['fullname'] ?? '';
 $email = $_POST['email'] ?? '';
 $phone = $_POST['phone'] ?? '';
