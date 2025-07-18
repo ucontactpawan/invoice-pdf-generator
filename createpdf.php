@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/MPDF/vendor/autoload.php';
 
 // Get form data
 $fullname = $_POST['fullname'] ?? '';
