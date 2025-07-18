@@ -1,22 +1,32 @@
 <?php
 require_once __DIR__ . '/MPDF/vendor/autoload.php';
 
-// Get form data
-$fullname = $_POST['fullname'] ?? '';
-$email = $_POST['email'] ?? '';
-$phone = $_POST['phone'] ?? '';
-$message = $_POST['message'] ?? '';
 
-// Example invoice data
+
+$dataFile = 'data.json';
+$latestUser = [ 
+    'fullname' => 'N/A',
+    'email' => 'N/A',
+    'phone' => 'N/A',
+    'address' => 'N/A',
+];
+
+if (file_exists($dataFile)) {
+    $allUsers = json_decode(file_get_contents($dataFile), true);
+    if (!empty($allUsers)) {
+        $latestUser = end($allUsers);
+    }
+}
+
 $invoice = [
     'number' => '9000000001',
     'order' => '9000000001',
     'date' => date('M d, Y, h:i:s A'),
     'customer' => [
-        'name' => $fullname,
-        'address' => $message,
-        'phone' => $phone,
-        'email' => $email,
+        'name' => htmlspecialchars($latestUser['fullname']),
+        'address' => htmlspecialchars($latestUser['address']),
+        'phone' => htmlspecialchars($latestUser['phone']),
+        'email' => htmlspecialchars($latestUser['email']),
     ],
     'shipping_method' => 'Flat Rate - Fixed',
     'payment_method' => 'COD/ UPI / Bank Transfer',
@@ -34,9 +44,8 @@ $invoice = [
     'total' => 162.37,
 ];
 
-$stylesheet = file_get_contents('style.css');
+$stylesheet = file_exists('style.css') ? file_get_contents('style.css') : '';
 
-// Build the HTML
 $html = '
 <html>
 <head>
@@ -133,6 +142,11 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_top' => 10,
     'margin_bottom' => 10,
 ]);
-$mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS); // Add CSS
-$mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);        // Add HTML
-$mpdf->Output('invoice.pdf', 'I'); // 'I' = display in browser, 'D' = force download
+$mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
+$mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+
+
+$mpdf->Output('invoice.pdf', 'D'); 
+
+exit;
+?>
